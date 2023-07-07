@@ -59,3 +59,87 @@ public class Manager extends Employee{
     public String getSecretary(){..}
 }
 ```
+<br>
+
+
+## WEEK 4
+### Abstract interfaces
+* Forces subclasses to provide a concrete implementation
+* Provide an abstract definition in shape<br>
+```java 
+public abstract double perimeter;
+```
+* Cannot create objects from a class that has abstract functions
+* Shape must itseld be declared to be abstract
+```java
+public abstract class Shape{
+    ...
+    public abstract double perimeter();
+    ...
+}
+```
+* Can still declare variables whose type is an abstract class
+```java
+Shape arr[] = new Shape[3];
+int arr = new int[3];
+arr[0] = new Circle(...);
+arr[1] = new Square(...);
+arr[2] = new Rectangle(...);
+
+for(i=0; i<2; i++){
+    sizearr[i] = arr[i].perimeter();
+        // dynamic dispatch
+        // each arr[i] calls the appropriate method
+    ...
+}
+```
+* Use abstract classes to specify generic properties
+```java
+public abstract class Comparable{
+    public abstract int cmp(Comparable s);
+        // return -1 if this < s,
+        //         0 if this ==0,
+        //         1 if this > s
+}
+```
+* Now we can sort any array of objects that extend <b><span style="color: red;">Comparable</span></b>
+```java
+public class SortFunctions{
+    public static void quickSort(Comparable[] a){
+        ...
+        // Usual code for quicksort, except that
+        // to compare a[i] and a[j] we use a[i].cmp(a[j])
+    }
+}
+```
+* To use this definition of quicksort, we write
+```java
+public class Myclass extends Comparable{
+    private double size;        // quantity used for comparison
+
+    public int cmp(Comparable s){
+        if(s instanceof Myclass){
+            // compare this.size and ((Myclass) s).size
+            // Note that cast to access s.size
+        }
+    }
+}
+```
+
+### Multiple Interfaces
+* Java does not allow classes to extend multiple classes
+* An interface is an abstract class with no concrete components
+```java
+pulblic inteface Comparable{
+    public abstract int cmp(Comparable s);
+}
+```
+* A class that extends an interface is said to implement it
+```java
+public class Circle extends Shape implements Comparable{
+    public double perimeter(){...}
+    public int cmp(Comparable s){...}
+        ...
+}
+```
+> Can extend only one class but can implement multiple interfaces
