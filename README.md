@@ -1,6 +1,74 @@
 # NOTES
 
-## Week 3
+
+## WEEK 1
+### Typing
+* Every variable we use has a type
+* Python determines the type based on the current value
+    * Dynamic typing - names derive type from the current value
+    ```python
+    x = 10 - x  # x is of type int
+    x = 7.5     # x is of type float
+    ```
+* Static typing - associate a type in advance with a name
+    * Need to declare names and their types in advance value
+    * ```int x, float a, ...```
+    * Cannot assign an incompatible value ```x = 7.5``` is no longer legal
+
+
+### Static Analysis
+* Identify errors as early as possible - saves cost, effort
+* Compilers cannot check that a program will work correctly
+    * <b>Halting problem - Alan Turing</b>
+* With variable declarations, compilers can detect type errors at compile time - static analysis
+    * Dynamic typing would catch these errors only when the code runs
+    * Executing code also slows down due to simultaneous monitoring for type correctness
+* Compilers also perform optimizations based on static analysis
+    * Reorder statements to optimize reads and writes
+    * Store previously computed expressions to re-use later
+
+### Scope of a variable
+* When the variable is available for use
+* In the following code, the x in f() is not in scope within call to g()
+```python
+def f(l):
+    ...
+    for x in l:
+        y = y + g(x)
+    ...
+
+
+def g(m):
+    ...
+    for x in range(m):
+        ...
+```
+
+* Lifetime of a variable
+    * How long the storage remains allocated
+    * Above lifetime of x in f() is till f() exits
+    * "Hole in scope" - variable is alive but not in scope
+
+### Memory Stack
+* Create activation record when function is called
+* Activation records are stacked
+    * Popped when function exits
+    * Control link points to start of previous record
+    * Return value link tells where to store result
+* Scope of a variable
+    * Variable in activation record at top of stack
+    * Access global variables by following control links
+
+### Passing arguments to functions
+##### Two ways to initialise parameters
+* Call by value - copy the value
+    * Updating the value inside the function has no side-effect
+* Call by reference - parameter points to same location as argument
+    * Can have side-effects
+    * Can update the contents, but cannot change the reference itself
+
+
+## WEEK 3
 ### Philosophy of OO Programming
 * Behaviour - what methods do we need to operate on objects
 * State - how does the object react when methods are invoked?
