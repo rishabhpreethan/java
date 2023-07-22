@@ -201,7 +201,7 @@ public class Myclass extends Comparable{
 pulblic inteface Comparable{
     public abstract int cmp(Comparable s);
 }
-```
+``` 
 * A class that extends an interface is said to implement it
 ```java
 public class Circle extends Shape implements Comparable{
@@ -211,3 +211,157 @@ public class Circle extends Shape implements Comparable{
 }
 ```
 > Can extend only one class but can implement multiple interfaces
+
+
+### Adding methods to interfaces
+* Static Functions
+    * Cannot access instance variables
+    * Invoke directly or using interface name: ```Comparable.cmpdoc()```
+```java
+public interface Comparable{
+    public static String cmpdoc(){
+        String a;
+        s = "return -1 if this < s";
+        s = "        0 if this ==0";
+        s = "        1 if this > s";
+        return s;
+    }
+}
+```
+* Default Functions
+    * Provided a default implementation for some functions
+    * Class can overrirde these
+    * Invoke like normal method, using object name: a[i].cmp(a[j])
+```java
+public interface Comparable{
+    public default int cmp(Comparable s){
+        return 0;
+    }
+}
+```
+
+### Dealing with conflicts
+* Old problem of multiple inheritance returns
+    * Conflict between static/default methods
+* Subclass must provide a fresh implementation
+```java
+public interface person{
+    public default String getName(){
+        return "no name";
+    }
+}
+
+public interface designation{
+    public default String getName(){
+        return "no designation";
+    }
+}
+
+public class employee implements person,designation{
+    // This function must be implemented as interfaces person and designation 
+    // have the same default function which causes a conflict
+    public String getName(){            
+        ...
+    }
+}
+```
+* Conflict could be between a class and an interface
+    * employee inherits from class person and implements designation
+    * Method inherited from the class wins
+```java
+public class person{
+    public default String getName(){        // this function gets priority
+        return "no name";
+    }
+}
+
+public interface designation{
+    public default String getName(){
+        return "no designation";
+    }
+}
+
+public class employee implements person,designation{
+    ...
+}
+```
+
+## WEEK 5
+### Polymorphism
+* In OOP, polymorphism usually refers to the effect of dynamic dispatch
+    * S is a subset of T
+    * S overrides a method f() defined in T
+    * Variable v of type T is assigned to an object of type S
+    * v.f() uses the definition of f() from S rather than T
+* Every object "knows" what it needs to do
+
+### Generics
+* Polymorphic reverse
+```java
+public <T> void reverse(T[] objarr){
+    Ttempobj;
+    int len = objarr.length;
+    for(i=0; i<n/2; i++){
+        tempobj = objarr[i];
+        objarr[i] = objarr[(n-1)-i];
+        objarr[(n-1)-i] = tempobj;
+    }
+}
+```
+* Polymorphic find
+    * Searching for a value of incompatible type is now a compile time error
+```java
+public <T> int find(T[] onjarr, T o){
+    int i;
+    for(i=0; i<objarr.length; i++){
+        if(objarr[i] == o){
+            return i;
+        }
+    }
+    return -1;
+}
+```
+* Polymorphic arraycopy
+    * Source and target types must be identical
+```java
+public <T> void arraycopy(T[] src, T[] tgt){
+    int i, limit;
+    limit = Math.min(src.length, tgt.length);
+    for(i=0; i<limit; i++){
+        tgt[i] = src[i];
+    }
+}
+```
+* A more generous arraycopy
+    * Source and taget types may be different
+    * Source type must extend target type
+```java
+public <S extends T.T> static void arraycopy(S[] src, T[] tgt){
+    int i, limit;
+    limit = Math.min(src.length, tgt.length);
+    for(i=0; i<limit; i++){
+        tgt[i] = src[i];
+    }
+}
+```
+* Polymorphic list
+```java
+public class linkedlist<T>{
+    private int size;
+    private Node first;
+    
+    public T head(){
+        T returnval;
+        ...
+        return returnval;
+    }
+
+    public void insert(T newdata){...}
+
+    private class Node{
+        private T data;
+        private Node next;
+        ...
+    }
+}
+``` 
