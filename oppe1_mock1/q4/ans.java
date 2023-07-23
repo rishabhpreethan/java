@@ -18,23 +18,23 @@ public class MapTest {
 	    Map<String, Integer> m = new LinkedHashMap<String, Integer>();
 	    String shop = "";
 	    int sold = 0;
-for(Shop s: sList)
-     m.put(s.getName(), m.getOrDefault(s.getName(),0)+s.getItemSold());
+        for(Shop s: sList)
+            m.put(s.getName(), m.getOrDefault(s.getName(),0)+s.getItemSold());
 
-for (HashMap.Entry<String, Integer> entry : m.entrySet()){
-    if(entry.getValue()> sold) {
-	shop = entry.getKey();
-        sold = entry.getValue();
-    }  
-}
-        System.out.println(shop+" : "+sold);
+        for (HashMap.Entry<String, Integer> entry : m.entrySet()){
+            if(entry.getValue()> sold) {
+            shop = entry.getKey();
+                sold = entry.getValue();
+            }  
+        }
+                System.out.println(shop+" : "+sold);
     }
     public static void main(String[] args) {
-	Scanner sc = new Scanner(System.in);
-	ArrayList<Shop> list = new ArrayList<Shop>();
-	for (int i = 0; i < 4; i++) {
-		list.add(new Shop(sc.next(), sc.nextInt()));
-	}
-	printShopName(list);
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Shop> list = new ArrayList<Shop>();
+        for (int i = 0; i < 4; i++) {
+            list.add(new Shop(sc.next(), sc.nextInt()));
+        }
+        printShopName(list);
     }
 }
